@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/styles.css"],"names":[],"mappings":"AAAA,KACE,4FAA4F,CAC5F,+BACF","file":"main.9eee4b3b.chunk.css","sourcesContent":["body {\n  @import url(\"https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap\");\n  font-family: \"Roboto\", sans-serif;\n}\n"]}
