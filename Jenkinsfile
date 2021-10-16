@@ -25,9 +25,15 @@ pipeline {
             }
         }
         stage('build and push image') {
-            
+            when {
+                allOf {
+                    anyOf {
+                        branch GIT_MASTER_BRANCH
+                    }
+                }
+            }
             tools {
-            nodejs "node 14.18"
+                nodejs "node 14.18"
             }
             steps {
                 sh '''
@@ -37,6 +43,13 @@ pipeline {
             }
         }
         stage('Deploy') {
+            when {
+                allOf {
+                    anyOf {
+                        branch GIT_MASTER_BRANCH
+                    }
+                }
+            }
             steps {
                 script {
                     APP_NAME="harbor.floret.dev/homeac/frontend"
