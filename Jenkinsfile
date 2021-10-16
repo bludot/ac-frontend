@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_MASTER_BRANCH='master'
+        GIT_MASTER_BRANCH='main'
         GIT_COMMIT=sh script: 'git rev-parse --verify HEAD', returnStdout: true
         GIT_TAG=sh script: 'git name-rev --name-only --tags HEAD | sed \'s/^undefined$/false/\'', returnStdout: true
     }
