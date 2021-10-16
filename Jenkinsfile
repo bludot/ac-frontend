@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     APP_NAME="harbor.floret.dev/homeac/frontend"
-                    VERSION=sh script: "echo $(node -p \"require('./package.json').version\" | tr -d \'\n\'", returnStdout: true
+                    VERSION=sh script: "echo \$(node -p \"require('./package.json').version\" | tr -d \'\n\'", returnStdout: true
                     try {
                         docker.withRegistry("https://harbor.floret.dev", "harbor-creds") {
                             //def stagImage = docker.build("$APP_NAME:staging")
