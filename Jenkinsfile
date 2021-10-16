@@ -37,6 +37,7 @@ pipeline {
             }
             steps {
                 sh '''
+                yarn install
                 # Run optional required steps before releasing
                 npx semantic-release
                 '''
