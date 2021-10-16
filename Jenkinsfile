@@ -34,6 +34,8 @@ pipeline {
                 npx semantic-release
                 '''
             }
+        }
+        stage('Deploy') {
             steps {
                 script {
                     APP_NAME="harbor.floret.dev/homeac/frontend"
@@ -50,11 +52,6 @@ pipeline {
                         error('Unexpected error while pushing to ECR!')
                     }
                 }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
             }
         }
     }
