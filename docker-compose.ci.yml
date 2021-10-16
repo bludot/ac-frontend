@@ -1,0 +1,20 @@
+version: "2.2"
+services:
+  frontend_ac:
+    build:
+      context: .
+      dockerfile: 'Dockerfile.local'
+    command: "/bin/bash -c 'yarn && yarn start'"
+    env_file: .env
+    volumes:
+      - '.:/usr/src/app'
+      - 'ac-frontend_deps:/usr/src/app/node_modules'
+    ports:
+      - '1337:3000'
+    networks:
+      - ac-frontend-network
+
+networks:
+  ac-frontend-network:
+volumes:
+  ac-frontend_deps:
