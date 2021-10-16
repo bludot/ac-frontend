@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                sh 'touch .env'
                 sh "docker-compose -f docker-compose.ci.yml down"
                 sh "docker-compose -f docker-compose.ci.yml build"
                 sh "docker-compose -f docker-compose.ci.yml run frontend_ac bash -c 'yarn && yarn test'"
