@@ -22,10 +22,10 @@ jobs:
       - name: set tag
         run: |
           export TAG=$(node -p "require('./package.json').version" | tr -d \'\n\')
-          echo "TAG =${TAG}" >> $GITHUB_ENV
+          echo "tag=$TAG" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: homeac/frontend:${{ env.TAG }}
+          tags: homeac/frontend:${{ env.tag }}
