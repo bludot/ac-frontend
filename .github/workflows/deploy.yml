@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: set tag
         run: |
-          TAG = echo $(node -p "require('./package.json').version" | tr -d \'\n\'
+          export TAG=$(node -p "require('./package.json').version" | tr -d \'\n\')
           echo "TAG =${TAG}" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v2
