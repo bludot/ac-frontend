@@ -36,4 +36,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: homeac/frontend:${{ env.tag }}
+          tags: ${{ secrets.REGISTRY }}/homeac/frontend:${{ env.tag }}
