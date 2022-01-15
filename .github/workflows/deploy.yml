@@ -1,15 +1,15 @@
 name: ci
 
-#workflow_run:
-#  workflows:
-#    - Semantic Release
-#  branches:
-#    - main
-#  types:
-#    - completed
+
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - Semantic Release
+    branches:
+      - main
+    types:
+      - completed
 
 jobs:
   docker:
