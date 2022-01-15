@@ -1,5 +1,13 @@
 name: ci
 
+#workflow_run:
+#  workflows:
+#    - Semantic Release
+#  branches:
+#    - main
+#  types:
+#    - completed
+
 on:
   push:
 
@@ -17,8 +25,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: set tag
         run: |
           export TAG=$(node -p "require('./package.json').version" | tr -d \'\n\')
