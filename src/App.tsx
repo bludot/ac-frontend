@@ -38,7 +38,7 @@ export default function App() {
   ] = useState(false);
 
   const debouncedData = useDebounce(data, 500);
-  const [loaded, setLoaded] = useState()
+  const [loaded, setLoaded] = useState(false)
 
   if (loaded) {
     // Here's where the API call happens
@@ -101,6 +101,7 @@ export default function App() {
       .get("/backend/status")
       .then((res) => {
         setData(res.data)
+        setLoaded(true)
         toast.info("request Sent");
       })
       .catch((error) => {
