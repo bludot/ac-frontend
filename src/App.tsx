@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<any>({});
   const [temp, setTemp]: [
     number,
     Dispatch<SetStateAction<number>>
@@ -99,7 +99,13 @@ export default function App() {
       .get("/backend/state")
       .then((res) => {
         setData(res.data)
+        setFanSpeed(data.fan)
+        setTemp(data.temp)
+        setSwing(data.swingh || data.swingv)
+        setPower(!!data.power)
+        setPowerful(!!data.powerful)
         setLoaded(true)
+
         toast.info("request Sent");
       })
       .catch((error) => {
