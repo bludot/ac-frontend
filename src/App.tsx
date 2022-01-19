@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   const [temp, setTemp]: [
     number,
     Dispatch<SetStateAction<number>>
