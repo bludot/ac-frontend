@@ -40,33 +40,31 @@ export default function App() {
   const debouncedData = useDebounce(data, 500);
   const [loaded, setLoaded] = useState(false)
 
-  if (loaded) {
-    // Here's where the API call happens
-    // We use useEffect since this is an asynchronous action
-    useEffect(
-      () => {
-        // Make sure we have a value (user has entered something in input)
-        if (debouncedData) {
-          // Set isSearching state
-          // setIsSearching(true);
-          // Fire off our API call
-          sendRequest(debouncedData).then((results) => {
-            // Set back to false since request finished
-            //setIsSearching(false);
-            // Set results state
-            //setResults(results);
-          });
-        } else {
-          //setResults([]);
-        }
-      },
-      // This is the useEffect input array
-      // Our useEffect function will only execute if this value changes ...
-      // ... and thanks to our hook it will only change if the original ...
-      // value (searchTerm) hasn't changed for more than 500ms.
-      [debouncedData]
-    );
-  }
+  // Here's where the API call happens
+  // We use useEffect since this is an asynchronous action
+  useEffect(
+    () => {
+      // Make sure we have a value (user has entered something in input)
+      if (debouncedData && loaded) {
+        // Set isSearching state
+        // setIsSearching(true);
+        // Fire off our API call
+        sendRequest(debouncedData).then((results) => {
+          // Set back to false since request finished
+          //setIsSearching(false);
+          // Set results state
+          //setResults(results);
+        });
+      } else {
+        //setResults([]);
+      }
+    },
+    // This is the useEffect input array
+    // Our useEffect function will only execute if this value changes ...
+    // ... and thanks to our hook it will only change if the original ...
+    // value (searchTerm) hasn't changed for more than 500ms.
+    [debouncedData]
+  );
 
   useEffect(() => {
     setData({ ...data, temp: temp });
