@@ -99,9 +99,9 @@ export default function App() {
       .get("/backend/state")
       .then((res) => {
         setData(res.data)
-        setFanSpeed(data.fan)
-        setTemp(data.temp)
-        setSwing(data.swingh || data.swingv)
+        setFanSpeed(data.fan || 0)
+        setTemp(data.temp || 0)
+        setSwing(!!data.swingh || !!data.swingv)
         setPower(!!data.power)
         setPowerful(!!data.powerful)
         setLoaded(true)
