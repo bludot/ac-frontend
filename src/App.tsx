@@ -99,11 +99,11 @@ export default function App() {
       .get("/backend/state")
       .then((res) => {
         setData(res.data)
-        setFanSpeed(data.fan || 0)
-        setTemp(data.temp || 0)
-        setSwing(!!data.swingh || !!data.swingv)
-        setPower(!!data.power)
-        setPowerful(!!data.powerful)
+        setFanSpeed(res.data.fan || 0)
+        setTemp(res.data.temp || 0)
+        setSwing(!!res.data.swingh || !!res.data.swingv)
+        setPower(!!res.data.power)
+        setPowerful(!!res.data.powerful)
         setLoaded(true)
 
         toast.info("request Sent");
