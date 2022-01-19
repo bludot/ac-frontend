@@ -98,7 +98,7 @@ export default function App() {
   function getStatus() {
     toast.info("Sending request");
     return axios
-      .get("/backend/status")
+      .get("/backend/state")
       .then((res) => {
         setData(res.data)
         setLoaded(true)
