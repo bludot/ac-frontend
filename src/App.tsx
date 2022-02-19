@@ -1,129 +1,130 @@
 import "./styles.css";
 import Knob from "./components/knob";
-import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import {Dispatch, SetStateAction, useState, useEffect} from "react";
 import axios from "axios";
 import useDebounce from "./utils/useDebounce";
 import Switch from "react-switch";
 import Slider from "./components/slider";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPowerOff, faRocket } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer, toast } from 'react-toastify';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPowerOff, faRocket} from "@fortawesome/free-solid-svg-icons";
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-  const [data, setData] = useState<any>({});
-  const [temp, setTemp]: [
-    number,
-    Dispatch<SetStateAction<number>>
-  ] = useState(26);
-  const [fanSpeed, setFanSpeed]: [
-    number,
-    Dispatch<SetStateAction<number>>
+    const [data, setData] = useState<any>({});
+    const [temp, setTemp]: [
+        number,
+        Dispatch<SetStateAction<number>>
+    ] = useState(26);
+    const [fanSpeed, setFanSpeed]: [
+        number,
+        Dispatch<SetStateAction<number>>
 
-  ] = useState(0);
-  // @ts-ignore
-  const [swing, setSwing]: [
-    boolean,
-    Dispatch<SetStateAction<boolean>>
-  ] = useState(true);
-  // @ts-ignore
-  const [power, setPower]: [
-    boolean,
-    Dispatch<SetStateAction<boolean>>
-  ] = useState(true);
-  // @ts-ignore
-  const [powerful, setPowerful]: [
-    boolean,
-    Dispatch<SetStateAction<boolean>>
-  ] = useState(false);
+    ] = useState(0);
+    // @ts-ignore
+    const [swing, setSwing]: [
+        boolean,
+        Dispatch<SetStateAction<boolean>>
+    ] = useState(true);
+    // @ts-ignore
+    const [power, setPower]: [
+        boolean,
+        Dispatch<SetStateAction<boolean>>
+    ] = useState(true);
+    // @ts-ignore
+    const [powerful, setPowerful]: [
+        boolean,
+        Dispatch<SetStateAction<boolean>>
+    ] = useState(false);
 
-  const debouncedData = useDebounce(data, 500);
-  const [loaded, setLoaded] = useState(false)
+    const debouncedData = useDebounce(data, 500);
+    const [loaded, setLoaded] = useState(false)
 
-  // Here's where the API call happens
-  // We use useEffect since this is an asynchronous action
-  useEffect(
-    () => {
-      // Make sure we have a value (user has entered something in input)
-      if (debouncedData && loaded) {
-        // Set isSearching state
-        // setIsSearching(true);
-        // Fire off our API call
-        sendRequest(debouncedData).then((results) => {
-          // Set back to false since request finished
-          //setIsSearching(false);
-          // Set results state
-          //setResults(results);
-        });
-      } else {
-        //setResults([]);
-      }
-    },
-    // This is the useEffect input array
-    // Our useEffect function will only execute if this value changes ...
-    // ... and thanks to our hook it will only change if the original ...
-    // value (searchTerm) hasn't changed for more than 500ms.
-    [debouncedData]
-  );
+    // Here's where the API call happens
+    // We use useEffect since this is an asynchronous action
+    useEffect(
+        () => {
+            // Make sure we have a value (user has entered something in input)
+            if (debouncedData && loaded) {
+                // Set isSearching state
+                // setIsSearching(true);
+                // Fire off our API call
+                sendRequest(debouncedData).then((results) => {
+                    // Set back to false since request finished
+                    //setIsSearching(false);
+                    // Set results state
+                    //setResults(results);
+                });
+            } else {
+                //setResults([]);
+            }
+        },
+        // This is the useEffect input array
+        // Our useEffect function will only execute if this value changes ...
+        // ... and thanks to our hook it will only change if the original ...
+        // value (searchTerm) hasn't changed for more than 500ms.
+        [debouncedData]
+    );
 
-  useEffect(() => {
-    setData({ ...data, temp: temp || 26 });
-  }, [temp]);
-  useEffect(() => {
-    setData({ ...data, fan: fanSpeed || 0 });
-  }, [fanSpeed]);
-  useEffect(() => {
-    setData({ ...data, swingv: swing ? 1 : 0 });
-  }, [swing]);
-  useEffect(() => {
-    setData({ ...data, power: power ? 1 : 0 });
-  }, [power]);
-  useEffect(() => {
-    setData({ ...data, powerful: powerful ? 1 : 0 });
-  }, [powerful]);
+    useEffect(() => {
+        setData({...data, temp: temp || 26});
+    }, [temp]);
+    useEffect(() => {
+        setData({...data, fan: fanSpeed || 0});
+    }, [fanSpeed]);
+    useEffect(() => {
+        setData({...data, swingv: swing ? 1 : 0});
+    }, [swing]);
+    useEffect(() => {
+        setData({...data, power: power ? 1 : 0});
+    }, [power]);
+    useEffect(() => {
+        setData({...data, powerful: powerful ? 1 : 0});
+    }, [powerful]);
 
-  function sendRequest(debounceData: any) {
-    toast.info("Sending request");
-    return axios
-      .post("/backend/cmd", debounceData)
-      .then(() => {
-        toast.info("request Sent");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-  function getStatus() {
-    toast.info("Sending request");
-    return axios
-      .get("/backend/state")
-      .then((res) => {
-        setData(res.data)
-        setFanSpeed(res.data.fan || 1)
-        setTemp(res.data.temp || 26)
-        setSwing(!!res.data.swingh || !!res.data.swingv)
-        setPower(!!res.data.power)
-        setPowerful(!!res.data.powerful)
-        setLoaded(true)
+    function sendRequest(debounceData: any) {
+        toast.info("Sending request");
+        return axios
+            .post("/backend/cmd", {...debounceData, mode: 0, quiet: 0})
+            .then(() => {
+                toast.info("request Sent");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
-        toast.info("request Sent");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+    function getStatus() {
+        toast.info("Sending request");
+        return axios
+            .get("/backend/state")
+            .then((res) => {
+                setData(res.data)
+                setFanSpeed(res.data.fan || 1)
+                setTemp(res.data.temp || 26)
+                setSwing(!!res.data.swingh || !!res.data.swingv)
+                setPower(!!res.data.power)
+                setPowerful(!!res.data.powerful)
+                setLoaded(true)
 
-  useEffect(() => {
-    getStatus();
-  }, [])
-  // @ts-ignore
-  // @ts-ignore
-  return (
-    <>
-    {loaded ? (
-      <div className="app">
-        <style>
-          {`
+                toast.info("request Sent");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    useEffect(() => {
+        getStatus();
+    }, [])
+    // @ts-ignore
+    // @ts-ignore
+    return (
+        <>
+            {loaded ? (
+                <div className="app">
+                    <style>
+                        {`
             body {
               height: 100vh;
             }
@@ -289,105 +290,105 @@ export default function App() {
               color: #999;
             }
           `}
-        </style>
-        <ToastContainer
-          position="top-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <div className="menu">Menu</div>
-        <div className="main">
-          <label className="swing" htmlFor="material-switch">
-            <span>Swing</span>
-            { /* @ts-ignore */ }
-            <Switch
-              checked={swing}
-              onChange={(checked: boolean) => setSwing(checked)}
-              offColor="#DFDBE9"
-              onColor="#DFDBE9"
-              onHandleColor="#7ED321"
-              handleDiameter={15}
-              uncheckedIcon={false}
-              checkedIcon={false}
-              boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
-              height={8}
-              width={30}
-              className="react-switch"
-              id="material-switch"
-            />
-          </label>
-          <label className="powerful" htmlFor="material-switch">
+                    </style>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                    <div className="menu">Menu</div>
+                    <div className="main">
+                        <label className="swing" htmlFor="material-switch">
+                            <span>Swing</span>
+                            { /* @ts-ignore */}
+                            <Switch
+                                checked={swing}
+                                onChange={(checked: boolean) => setSwing(checked)}
+                                offColor="#DFDBE9"
+                                onColor="#DFDBE9"
+                                onHandleColor="#7ED321"
+                                handleDiameter={15}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
+                                height={8}
+                                width={30}
+                                className="react-switch"
+                                id="material-switch"
+                            />
+                        </label>
+                        <label className="powerful" htmlFor="material-switch">
             <span>
-              <FontAwesomeIcon icon={faRocket} />
+              <FontAwesomeIcon icon={faRocket}/>
             </span>
-            <Switch
-              checked={powerful}
-              onChange={setPowerful}
-              offColor="#DFDBE9"
-              onColor="#DFDBE9"
-              onHandleColor="#7ED321"
-              handleDiameter={15}
-              uncheckedIcon={false}
-              checkedIcon={false}
-              boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
-              height={8}
-              width={30}
-              className="react-switch"
-              id="material-switch"
-            />
-          </label>
-          <br />
-          <div className="center">
-            <div className="temperature">
-              <div
-                className={`power ${power ? "on" : "off"}`}
-                onClick={() => {
-                  setPower(!power);
-                }}
-              >
-                <FontAwesomeIcon icon={faPowerOff} />
-              </div>
-              <Knob
-                cursor={true}
-                fgColor="#FF645A"
-                bgColor="#FEFEFE"
-                inputColor="#FFFFFF"
-                value={temp}
-                onChange={setTemp}
-                min={10}
-                max={32}
-                width={250}
-                height={250}
-                lineCap="round"
-                thickness={0.10}
-                angleOffset={220}
-                angleArc={280}
-                displayInput={false}
-                displayCustom={() => (
-                  <span className="temp">
+                            <Switch
+                                checked={powerful}
+                                onChange={setPowerful}
+                                offColor="#DFDBE9"
+                                onColor="#DFDBE9"
+                                onHandleColor="#7ED321"
+                                handleDiameter={15}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
+                                height={8}
+                                width={30}
+                                className="react-switch"
+                                id="material-switch"
+                            />
+                        </label>
+                        <br/>
+                        <div className="center">
+                            <div className="temperature">
+                                <div
+                                    className={`power ${power ? "on" : "off"}`}
+                                    onClick={() => {
+                                        setPower(!power);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faPowerOff}/>
+                                </div>
+                                <Knob
+                                    cursor={true}
+                                    fgColor="#FF645A"
+                                    bgColor="#FEFEFE"
+                                    inputColor="#FFFFFF"
+                                    value={temp}
+                                    onChange={setTemp}
+                                    min={10}
+                                    max={32}
+                                    width={250}
+                                    height={250}
+                                    lineCap="round"
+                                    thickness={0.10}
+                                    angleOffset={220}
+                                    angleArc={280}
+                                    displayInput={false}
+                                    displayCustom={() => (
+                                        <span className="temp">
                     {temp}
-                    <span>°C</span>
+                                            <span>°C</span>
                   </span>
-                )}
-                className="knob"
-              ></Knob>
-            </div>
-            <div className="fan-slider">
-              <div className="slider-text">Fan Speed</div>
-              { /* @ts-ignore */}
-              <Slider min={0} max={5} value={fanSpeed} onChange={setFanSpeed} />
-            </div>
-          </div>
-        </div>
-        <div className="header">One</div>
-        <div className="right">Right</div>
-      </div>) : null }
-      </>
-  );
+                                    )}
+                                    className="knob"
+                                ></Knob>
+                            </div>
+                            <div className="fan-slider">
+                                <div className="slider-text">Fan Speed</div>
+                                { /* @ts-ignore */}
+                                <Slider min={0} max={5} value={fanSpeed} onChange={setFanSpeed}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="header">One</div>
+                    <div className="right">Right</div>
+                </div>) : null}
+        </>
+    );
 }
