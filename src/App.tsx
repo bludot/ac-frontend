@@ -67,10 +67,10 @@ export default function App() {
   );
 
   useEffect(() => {
-    setData({ ...data, temp: temp });
+    setData({ ...data, temp: temp || 26 });
   }, [temp]);
   useEffect(() => {
-    setData({ ...data, fan: fanSpeed });
+    setData({ ...data, fan: fanSpeed || 0 });
   }, [fanSpeed]);
   useEffect(() => {
     setData({ ...data, swingv: swing ? 1 : 0 });
