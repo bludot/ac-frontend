@@ -1,6 +1,9 @@
-import { render } from "react-dom";
-import 'normalize.css';
-import App from "./App";
+import React from 'react';
+import {render} from "react-dom";
+import './scss/base.scss';
+import Bootstrap from './bootstrap'
 
-const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+render(<Bootstrap />, document.querySelector('#root'))
+
+// const rootElement = document.getElementById("root");
+// render(<Index/>, rootElement);
