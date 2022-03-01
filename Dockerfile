@@ -3,6 +3,7 @@ ARG NODE_VERSION=16.13.2
 FROM node:${NODE_VERSION}-alpine3.14 as build
 
 WORKDIR /app
+ENV APP_CONFIG=staging
 COPY --chown=node:node . ${WORKDIR}
 
 COPY ./package.json /app/package.json
