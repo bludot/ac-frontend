@@ -100,7 +100,6 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: 'public/assets', to: 'assets' },
-        { from: 'src/_redirects', to: '_redirects', toType: 'file' },
         {
           from: path.resolve(__dirname, `./src/config/static/${configName}/index.json`),
           to: path.resolve(__dirname, './dist/config.json'),
