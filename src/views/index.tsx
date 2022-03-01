@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPowerOff, faRocket} from "@fortawesome/free-solid-svg-icons";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {getACState} from "./service";
+import {getACState, setACState} from "./service";
 
 export default function Index() {
     const [data, setData] = useState<any>({
@@ -69,14 +69,13 @@ export default function Index() {
 
     function sendRequest(debounceData: any) {
         toast.info("Sending request");
-        return axios
-            .post("/backend/cmd", {...debounceData, mode: 0, quiet: 0})
+        return setACState({...debounceData, mode: 0, quiet: 0})
             .then(() => {
-                toast.info("request Sent");
+                toast.success("Request sent");
             })
-            .catch((error) => {
-                console.error(error);
-            });
+            .catch(() => {
+                toast.error("Request failed");
+            })
     }
 
     function getStatus() {
