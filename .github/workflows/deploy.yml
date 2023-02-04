@@ -4,10 +4,8 @@ name: ci
 
 on:
   workflow_run:
-    workflows:
-      - Semantic Release
-    branches:
-      - main
+    workflows: ["Semantic Release"]
+    branches: [main]
     types:
       - completed
 

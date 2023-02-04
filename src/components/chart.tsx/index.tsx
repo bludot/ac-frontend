@@ -12,12 +12,12 @@ import {
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-moment";
-import axios from "axios";
 import { Line } from "react-chartjs-2";
 import { sub, add, format } from 'date-fns'
 import api from '../../services/api'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Select from "../input/select";
 
 
 ChartJS.register(
@@ -88,8 +88,15 @@ const options: ChartOptions<"line"> = {
 };
 
 const Chartt = () => {
-  const [toDate, setToDate] = useState(new Date());
-  const [fromDate, setFromDate] = useState(sub(toDate, { hours: 6 }));
+  const [range, setRange] = useState(6);
+  const [dates, setDates] = useState<{ from: Date; to: Date }>({
+    from: sub(new Date(), { hours: range }),
+    to: new Date()
+  });
+
+  
+
+
   const [chartData, setChartData] = useState({
     datasets: [
       {
@@ -119,7 +126,7 @@ const Chartt = () => {
 
     // date in utc
 
-    api.ac.getRoomCondtionsBetween(fromDate.toISOString(), toDate.toISOString()).then((res) => {
+    api.ac.getRoomCondtionsBetween(dates.from.toISOString(), dates.to.toISOString()).then((res) => {
       console.log(res);
       setChartData({
         datasets: [
@@ -151,33 +158,50 @@ const Chartt = () => {
   useEffect(() => {
     Chart();
   }, []);
+  useEffect(() => {
+    Chart();
+  }, [dates]);
 
   function back() {
-    setToDate(sub(toDate, { hours: 6 }));
-    setFromDate(sub(fromDate, { hours: 6 }));
-    Chart();
+    setDates({
+      from: sub(dates.from, { hours: range }),
+      to: sub(dates.to, { hours: range })
+    });
   }
 
   function forward() {
-    setToDate(add(toDate, { hours: 6 }));
-    setFromDate(add(fromDate, { hours: 6 }));
-    Chart();
+    setDates({
+      from: add(dates.from, { hours: range }),
+      to: add(dates.to, { hours: range })
+    });
   }
+
+  function onSeleted(item: any) {
+    setRange(item.value);
+    setDates({
+      from: sub(new Date(), { hours: item.value }),
+      to: new Date()
+    });
+  }
+
   return (
     <div>
       <div className="flex flex-row items-center space-x-4">
         <span
-          className="flex-none inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
+          className="flex-none inline-flex -space-x-px overflow-visible rounded-md border bg-white shadow-sm">
           <button
             onClick={back}
             className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative">
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
 
-          <span
+          <span className="inline-block relative">
+            <Select items={new Array(24).fill(0).map((_, i) => ({ id: i, name: `${i+1} Hrs`, value: i+1 }))} onChange={onSeleted}/>
+          </span>
+          {/* <span
             className="inline-block px-4 py-2 text-sm font-medium text-gray-700">
             6 Hrs
-          </span>
+          </span> */}
 
           <button
             onClick={forward}
@@ -186,7 +210,7 @@ const Chartt = () => {
           </button>
         </span>
         <span className="flex-auto text-center">
-          <span>{format(fromDate, "MM/dd/yyyy HH:mm:ss")}</span><span>-</span><span>{format(toDate, "MM/dd/yyyy HH:mm:ss")}</span>
+          <span>{format(dates.from, "MM/dd/yyyy HH:mm:ss")}</span><span>-</span><span>{format(dates.to, "MM/dd/yyyy HH:mm:ss")}</span>
         </span>
       </div>
       <div style={{ height: "60vh", position: "relative", marginBottom: "1%", padding: "1%" }}>
