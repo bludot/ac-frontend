@@ -12,6 +12,7 @@ require('dotenv').config()
 const configName = process.env.APP_CONFIG || process.env.NODE_ENV || 'development'
 
 module.exports = {
+  
   mode: prod ? 'production' : 'development',
   entry: './src/index.tsx',
   devServer: {
