@@ -87,12 +87,19 @@ const options: ChartOptions<"line"> = {
   }
 };
 
+enum DataType {
+  TEMPC = "tempC",
+  TEMPF = "tempF",
+  HUMIDITY = "humidity"
+}
+
 const Chartt = () => {
   const [range, setRange] = useState(6);
   const [dates, setDates] = useState<{ from: Date; to: Date }>({
     from: sub(new Date(), { hours: range }),
     to: new Date()
   });
+  const [dataType, setDataType]: [DataType, any] = useState(DataType.TEMPC);
 
   
 
@@ -133,7 +140,7 @@ const Chartt = () => {
           {
             label: "TemperatureC",
             data: res.map((item: any) => ({
-              y: item.tempC,
+              y: item[dataType],
               x: item.createdAt
             })),
             fill: true,
@@ -160,7 +167,7 @@ const Chartt = () => {
   }, []);
   useEffect(() => {
     Chart();
-  }, [dates]);
+  }, [dates, dataType]);
 
   function back() {
     setDates({
@@ -183,6 +190,9 @@ const Chartt = () => {
       to: new Date()
     });
   }
+  function onDataTypeSelected(item: any) {
+    setDataType(item.value);
+  }
 
   return (
     <div>
@@ -194,9 +204,27 @@ const Chartt = () => {
             className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative">
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
-
           <span className="inline-block relative">
-            <Select items={new Array(24).fill(0).map((_, i) => ({ id: i, name: `${i+1} Hrs`, value: i+1 }))} onChange={onSeleted}/>
+            <Select items={[
+              {
+              id: 0,
+              name: "C°",
+              value: DataType.TEMPC
+            },
+            {
+              id: 1,
+              name: "F°",
+              value: DataType.TEMPF
+            },
+            {
+              id: 2,
+              name: "Humidity",
+              value: DataType.HUMIDITY
+            }
+            ]} defaultIndex={0} onChange={onDataTypeSelected}/>
+          </span>
+          <span className="inline-block relative">
+            <Select defaultIndex={5} items={new Array(24).fill(0).map((_, i) => ({ id: i, name: `${i+1} Hrs`, value: i+1 }))} onChange={onSeleted}/>
           </span>
           {/* <span
             className="inline-block px-4 py-2 text-sm font-medium text-gray-700">

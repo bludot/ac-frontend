@@ -10,10 +10,10 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Select({items, onChange}: {items: {name: string, id: number, value: number}[], onChange: (item: {name: string, id: number, value: number}) => void}) {
-  const [selected, setSelected] = useState(items[5])
+export default function Select({items, defaultIndex, onChange}: {defaultIndex: number, items: {name: string, id: number, value: any}[], onChange: (item: {name: string, id: number, value: any}) => void}) {
+  const [selected, setSelected] = useState(items[defaultIndex])
 
-  function handleChange(item: {name: string, id: number, value: number}) {
+  function handleChange(item: {name: string, id: number, value: any}) {
     setSelected(item)
     onChange(item)
   }
@@ -40,7 +40,7 @@ export default function Select({items, onChange}: {items: {name: string, id: num
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {items.map((item) => (
                   <Listbox.Option
                     key={item.id}
