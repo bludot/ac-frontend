@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import Header from '../components/header'
 
 export default function Layout() {
   return (<div className="app">
@@ -15,7 +16,7 @@ export default function Layout() {
       draggable
       pauseOnHover
     />
-    <div className="header">One</div>
+    <Header />
     <div className="main">
       <Outlet />
     </div>
