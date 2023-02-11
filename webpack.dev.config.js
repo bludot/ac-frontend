@@ -18,7 +18,6 @@ module.exports = {
   devServer: {
     allowedHosts: [
       'localhost',
-      'mma-admin.staging.saturdays.io',
     ],
     headers: {
       'Access-Control-Allow-Origin': '*',
