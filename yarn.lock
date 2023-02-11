@@ -1715,6 +1715,11 @@
   dependencies:
     client-only "^0.0.1"
 
+"@howiefh/ant-path-matcher@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@howiefh/ant-path-matcher/-/ant-path-matcher-0.0.2.tgz#fe60c468be5e7eb0c48983b0f770c76729a03223"
+  integrity sha512-gIVZbBi7KX43XaI4GUDITYgR6YFdRiGBu4HazVkjVTZ/tlNH6qSpydTxaZ1cd2eIzvSblXM63SqCxVo30yA9ww==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -6792,7 +6797,7 @@ chartjs-plugin-zoom@^2.0.0:
   dependencies:
     hammerjs "^2.0.8"
 
-"chokidar@>=3.0.0 <4.0.0", chokidar@^3.4.1, chokidar@^3.4.2, chokidar@^3.5.3:
+"chokidar@>=3.0.0 <4.0.0", chokidar@^3.4.1, chokidar@^3.4.2, chokidar@^3.5.2, chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
   integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
@@ -9568,7 +9573,7 @@ fs-extra@^10.0.1:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-extra@^11.0.0:
+fs-extra@^11.0.0, fs-extra@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.1.0.tgz#5784b102104433bb0e090f48bfc4a30742c357ed"
   integrity sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==
@@ -18181,6 +18186,13 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
+vite-plugin-copy@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/vite-plugin-copy/-/vite-plugin-copy-0.1.6.tgz#863ee81f7771b099122d24b954725d8e7e604a80"
+  integrity sha512-bqIaefZOE2Jx8P5wJuHKL5GzCERa/pcwdUQWaocyTNXgalN2xkxXH7LmqRJ34V2OlKF2F9E/zj0zITS7U6PpUg==
+  dependencies:
+    fast-glob "^3.2.7"
+
 vite-plugin-html@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/vite-plugin-html/-/vite-plugin-html-3.2.0.tgz#0d4df9900642a321a139f1c25c05195ba9d0ec79"
@@ -18198,6 +18210,24 @@ vite-plugin-html@^3.2.0:
     html-minifier-terser "^6.1.0"
     node-html-parser "^5.3.3"
     pathe "^0.2.0"
+
+vite-plugin-mock-server@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vite-plugin-mock-server/-/vite-plugin-mock-server-1.0.4.tgz#23624c8bc583a519193b14f47f1447ca1a927d67"
+  integrity sha512-ByWLtrBZVo1UkaHPvRpRo0+h/gWorWdTyuYCu2Hcicz3gbuSSdDjz6v8pUGAzpubae90Q7ziOqRL1TOHsbQpsQ==
+  dependencies:
+    "@howiefh/ant-path-matcher" "0.0.2"
+    chokidar "^3.5.2"
+
+vite-plugin-static-copy@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-static-copy/-/vite-plugin-static-copy-0.13.0.tgz#1a05bfc0afb5d89e052043f645b610b57b050662"
+  integrity sha512-cln+fvKMgwNBjxQ59QVblmExZrc9gGEdRmfqcPOOGpxT5KInfpkGMvmK4L+kCAeHHSSGNU1bM7BA9PQgaAJc6g==
+  dependencies:
+    chokidar "^3.5.3"
+    fast-glob "^3.2.11"
+    fs-extra "^11.1.0"
+    picocolors "^1.0.0"
 
 vite@^4.1.1:
   version "4.1.1"
